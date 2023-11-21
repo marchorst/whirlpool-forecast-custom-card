@@ -98,7 +98,7 @@ export class WhirlpoolForecastCustomCard extends LitElement {
                             <ha-icon icon="mdi:water-thermometer-outline"></ha-icon> <span id="c1">${this.state}°C</span>
                         </span>
                         <span class="child-main">
-                            <ha-icon icon="mdi:clock-alert-outline"></ha-icon> <span id="c2">${this.desired_hours}</span>
+                            <ha-icon icon="mdi:clock-alert-outline"></ha-icon> <span id="c2">${this.desired_hours < 0 ? ' -': this.desired_hours}</span>
                         </span>
                         <span class="child-main">
                             <ha-icon icon="mdi:thermometer-chevron-up"></ha-icon> <span id="c3">${this.perHour}</span>°C/h
