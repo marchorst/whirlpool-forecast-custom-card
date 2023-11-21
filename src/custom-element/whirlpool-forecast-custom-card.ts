@@ -13,6 +13,9 @@ export class WhirlpoolForecastCustomCard extends LitElement {
     private cardTitle: string = "Whirlpool Forecast";
 
     @property({ attribute: false })
+    private hours: number = 2;
+
+    @property({ attribute: false })
     private state: any = "";
 
     private _hass: any;
@@ -21,6 +24,9 @@ export class WhirlpoolForecastCustomCard extends LitElement {
 
     @property({ attribute: false })
     private  perHour = 0;
+
+    @property({ attribute: false })
+    private  perMinute = 0;
     
     @property({ attribute: false })
     private  desired_temperature = 34;
@@ -54,24 +60,35 @@ export class WhirlpoolForecastCustomCard extends LitElement {
     setConfig(config: IWhirlpoolForecastConfig): void {
         this.entity = config.entity;
         this.cardTitle = config.title || "Whirlpool Forecast";
+        this.desired_temperature = config.target || this.desired_temperature;
+        this.hours = config.hours || this.hours;
     }
 
     getData() {
-        var lastHour = new Date();
-        lastHour.setTime(lastHour.getTime() + (-2 * 60 * 60 * 1000));
+        let lastHour = new Date();
+        lastHour.setTime(lastHour.getTime() + ((this.hours * -1) * 60 * 60 * 1000));
         const history = this._hass.callApi('GET', `history/period/${encodeURIComponent(lastHour.toISOString())}?filter_entity_id=${encodeURIComponent(this.entity)}`);
         
         // Process the retrieved data
         history.then((data : any) => {
-        var lastUpdate = data[0][0].last_updated
-        var lastUpdateState = data[0][0].state
-        var oldestUpdate : any = data[0][data[0].length - 1].last_updated
-        var oldestUpdateState : any = data[0][data[0].length - 1].state
-        var timediff : any= (((new Date(oldestUpdate).getTime() - new Date(lastUpdate).getTime()) / 1000) / 60)
-        var perMinute = (lastUpdateState - oldestUpdateState) / timediff;
-
-        this.perHour = Math.floor(perMinute * 60);
-        this.desired_hours = Math.floor(((this.desired_temperature - this.state) / perMinute) / 60);
+        let lastUpdate = data[0][0].last_updated
+        let lastUpdateState = data[0][0].state
+        let oldestUpdate : any = data[0][data[0].length - 1].last_updated
+        let oldestUpdateState : any = data[0][data[0].length - 1].state
+        let timediff : any= (((new Date(oldestUpdate).getTime() - new Date(lastUpdate).getTime()) / 1000) / 60)
+        if((lastUpdateState - oldestUpdateState) == 0) {
+            this.perMinute = 0;
+        } else {
+            this.perMinute = ((lastUpdateState - oldestUpdateState) / timediff);
+        }
+        
+        if(this.perMinute == 0) {
+            this.perHour = 0;
+            this.desired_hours = -1;
+        } else {
+            this.perHour = Math.floor(this.perMinute * 60);
+            this.desired_hours = Math.floor(((this.desired_temperature - this.state) / this.perMinute) / 60);
+        }
         });
     }
 

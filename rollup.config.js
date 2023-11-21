@@ -17,7 +17,7 @@ const plugins = [
     logLevel: 'warn',
   }),
   serve({
-    contentBase: './dist',
+    contentBase: './',
     host: '127.0.0.1',
     port: 5000,
     allowCrossOrigin: true,
