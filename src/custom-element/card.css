@@ -1,0 +1,52 @@
+.truncate {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.card-content > div {
+    margin-bottom: 8px;
+}
+.card-content > div:last-child {
+    margin-bottom: 0;
+}
+
+/* Targeting the element with class "main" */
+.main {
+    display: grid;
+    grid-template-columns: 33% 66%;
+  }
+    
+  /* Targeting the element with class "inner-main-icon" */
+  .inner-main-icon {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+  }
+  
+  /* Targeting the element with class "inner-main" */
+  .inner-main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+  }
+  
+  /* Targeting all elements with class "child-main" */
+  .child-main {
+    flex: 1 1 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+  }
+  
+  /* Overriding the --mdc-icon-size for ha-icon to 50% */
+.inner-main-icon ha-icon {
+    --mdc-icon-size: 50%;
+  }
+  

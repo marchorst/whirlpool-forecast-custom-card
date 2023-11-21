@@ -1,0 +1,40 @@
+{
+  "name": "whirlpool-forecast-custom-card",
+  "version": "0.1.0",
+  "description": "whirlpool-forecast-custom-card",
+  "main": "dist/whirlpool-forecast-custom-card.js",
+  "scripts": {
+    "build": "rollup -c",
+    "release": "rollup --environment release -c",
+    "watch": "rollup -c --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marchorst/whirlpool-forecast-custom-card.git"
+  },
+  "keywords": [
+    "lovelace",
+    "card",
+    "boilerplate",
+    "home",
+    "assistant"
+  ],
+  "author": "Marc Horst",
+  "license": "MIT",
+  "homepage": "https://marc-horst.de",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-typescript": "^6.0.0",
+    "rollup": "^2.29.0",
+    "rollup-plugin-import-css": "^3.0.2",
+    "rollup-plugin-minify-html-literals": "^1.2.6",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-version-injector": "^1.3.3",
+    "tslib": "^2.0.2",
+    "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "lit": "^2.0.2",
+    "rollup-plugin-serve": "^2.0.2"
+  }
+}
